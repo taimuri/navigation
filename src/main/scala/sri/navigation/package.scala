@@ -113,16 +113,43 @@ package object navigation {
   }
 
   @inline
-  def registerNavigator(
+  def registerNavigatorAsDrawerScreen(
       name: String,
       navigator: NavigationNavigatorConstructor,
       path: OptionalParam[String] = OptDefault,
-      navigationOptions: OptionalParam[NavigationScreenOptions] = OptDefault)
-    : (String, NavigationRouteConfig) =
+      navigationOptions: OptionalParam[NavigationDrawerScreenOptions] =
+        OptDefault): (String, NavigationDrawerScreenRouteConfig) =
     registerRoute(name,
                   comp = navigator,
                   path = path,
                   navigationOptions = navigationOptions)
+      .asInstanceOf[(String, NavigationDrawerScreenRouteConfig)]
+
+  @inline
+  def registerNavigatorAsTabScreen(
+      name: String,
+      navigator: NavigationNavigatorConstructor,
+      path: OptionalParam[String] = OptDefault,
+      navigationOptions: OptionalParam[NavigationTabScreenOptions] = OptDefault)
+    : (String, NavigationTabScreenRouteConfig) =
+    registerRoute(name,
+                  comp = navigator,
+                  path = path,
+                  navigationOptions = navigationOptions)
+      .asInstanceOf[(String, NavigationTabScreenRouteConfig)]
+
+  @inline
+  def registerNavigatorAsStackScreen(
+      name: String,
+      navigator: NavigationNavigatorConstructor,
+      path: OptionalParam[String] = OptDefault,
+      navigationOptions: OptionalParam[NavigationDrawerScreenOptions] =
+        OptDefault): (String, NavigationStackScreenRouteConfig) =
+    registerRoute(name,
+                  comp = navigator,
+                  path = path,
+                  navigationOptions = navigationOptions)
+      .asInstanceOf[(String, NavigationStackScreenRouteConfig)]
 
   @inline
   private def registerRoute[T <: NavigationScreenOptions, C <: ScreenClass](

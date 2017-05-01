@@ -48,12 +48,12 @@ package object navigators {
   }
 
   @inline
-  def StackNavigator(routes: (String, NavigationScreenRouteConfig)*) =
+  def StackNavigator(routes: (String, NavigationStackScreenRouteConfig)*) =
     StackNavigatorJS(js.Dictionary(routes: _*))
 
   @inline
   def StackNavigator(stackConfig: StackNavigatorConfig,
-                     routes: (String, NavigationScreenRouteConfig)*) =
+                     routes: (String, NavigationStackScreenRouteConfig)*) =
     StackNavigatorJS(js.Dictionary(routes: _*), stackConfig)
 
   @ScalaJSDefined
@@ -93,12 +93,12 @@ package object navigators {
   }
 
   @inline
-  def TabNavigator(routes: (String, NavigationScreenRouteConfig)*) =
+  def TabNavigator(routes: (String, NavigationTabScreenRouteConfig)*) =
     TabNavigatorJS(js.Dictionary(routes: _*))
 
   @inline
   def TabNavigator(tabConfig: TabNavigatorConfig,
-                   routes: (String, NavigationScreenRouteConfig)*) =
+                   routes: (String, NavigationTabScreenRouteConfig)*) =
     TabNavigatorJS(js.Dictionary(routes: _*), tabConfig)
 
   @ScalaJSDefined
@@ -138,11 +138,11 @@ package object navigators {
   }
 
   @inline
-  def DrawerNavigator(routes: (String, NavigationScreenRouteConfig)*) =
+  def DrawerNavigator(routes: (String, NavigationDrawerScreenRouteConfig)*) =
     DrawerNavigatorJS(js.Dictionary(routes: _*))
 
   @inline
   def DrawerNavigator(tabConfig: DrawerNavigatorConfig,
-                      routes: (String, NavigationScreenRouteConfig)*) =
+                      routes: (String, NavigationDrawerScreenRouteConfig)*) =
     DrawerNavigatorJS(js.Dictionary(routes: _*), tabConfig)
 }
