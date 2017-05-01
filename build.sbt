@@ -1,6 +1,6 @@
 name := "navigation"
 
-//version := "2017.4.0-SNAPSHOT"
+version := "2017.4.0-SNAPSHOT"
 
 enablePlugins(ScalaJSPlugin)
 

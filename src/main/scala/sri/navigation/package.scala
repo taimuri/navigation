@@ -53,7 +53,7 @@ package object navigation {
     NavigationInitAction | NavigationStackAction | NavigationTabAction
 
   type NavigationRouteConfig =
-    NavigationScreenRouteConfig | NavigationLazyScreenRouteConfig
+    NavigationScreenRouteConfig
 
   type Navigation[P <: js.Object] = NavigationScreenProp[P]
 
