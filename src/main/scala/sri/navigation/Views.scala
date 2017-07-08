@@ -1,6 +1,6 @@
 package sri.navigation
 
-import sri.core.{CreateElementJS, JSComponent, ReactClass}
+import sri.core.{CreateElementJS, JSComponent}
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport

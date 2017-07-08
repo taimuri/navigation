@@ -4,16 +4,14 @@ import sri.core.{ComponentConstructor, ReactClass, ReactElement}
 import sri.macros.{FunctionObjectMacro, OptDefault, OptionalParam}
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.{JSImport, ScalaJSDefined}
+import scala.scalajs.js.annotation.JSImport
 
 package object navigators {
 
-  @ScalaJSDefined
   trait NavigationNavigatorConstructor extends ComponentConstructor {
     override type PropsType = NavigationNavigatorProps
   }
 
-  @ScalaJSDefined
   trait StackNavigatorConfig
       extends NavigationContainerConfig
       with NavigationStackViewConfig
@@ -56,7 +54,6 @@ package object navigators {
                      routes: (String, NavigationStackScreenRouteConfig)*) =
     StackNavigatorJS(js.Dictionary(routes: _*), stackConfig)
 
-  @ScalaJSDefined
   trait TabNavigatorConfig
       extends NavigationTabRouterConfig
       with TabViewConfig
@@ -101,7 +98,6 @@ package object navigators {
                    routes: (String, NavigationTabScreenRouteConfig)*) =
     TabNavigatorJS(js.Dictionary(routes: _*), tabConfig)
 
-  @ScalaJSDefined
   trait DrawerNavigatorConfig
       extends NavigationTabRouterConfig
       with DrawerViewConfig

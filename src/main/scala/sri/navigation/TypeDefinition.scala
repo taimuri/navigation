@@ -10,21 +10,17 @@ import sri.macros.{
 
 import scala.scalajs.js
 import scala.scalajs.js.Dynamic.literal
-import scala.scalajs.js.annotation.ScalaJSDefined
 import scala.scalajs.js.{undefined, |, UndefOr => U}
 
-@ScalaJSDefined
 trait NavigationState extends js.Object {
   val index: Double
   val routes: js.Array[NavigationRoute[js.Object]]
 }
 
-@ScalaJSDefined
 trait RouteBase extends js.Object {
   type ParamsType <: js.Object
 }
 
-@ScalaJSDefined
 trait NavigationRoute[Params <: js.Object] extends RouteBase {
   override type ParamsType = Params
   val key: String
@@ -47,7 +43,6 @@ object NavigationRoute {
   }
 }
 
-@ScalaJSDefined
 trait NavigationRouter extends js.Object {
   val getStateForAction: js.Function2[NavigationAction /*action*/,
                                       U[NavigationState] /*lastState*/,
@@ -68,7 +63,6 @@ trait NavigationRouter extends js.Object {
 
 }
 
-@ScalaJSDefined
 trait IconOptions extends js.Object {
 
   val tintColor: String
@@ -76,10 +70,8 @@ trait IconOptions extends js.Object {
   val focused: Boolean
 }
 
-@ScalaJSDefined
 trait NavigationScreenOptions extends js.Object
 
-@ScalaJSDefined
 trait NavigationStackScreenOptions extends NavigationScreenOptions
 
 object NavigationStackScreenOptions {
@@ -91,6 +83,7 @@ object NavigationStackScreenOptions {
             headerTitle: OP[String | ReactElement] = NoValue,
             headerTitleStyle: OP[js.Any] = NoValue,
             headerStyle: OP[js.Any] = NoValue,
+            headerBackTitleStyle: OP[js.Any] = NoValue,
             headerTintColor: OP[String] = NoValue,
             headerVisible: OP[Boolean] = NoValue,
             gesturesEnabled: OP[Boolean] = NoValue,
@@ -105,7 +98,6 @@ object NavigationStackScreenOptions {
   }
 }
 
-@ScalaJSDefined
 trait NavigationTabScreenOptions extends NavigationScreenOptions
 
 object NavigationTabScreenOptions {
@@ -121,7 +113,6 @@ object NavigationTabScreenOptions {
   }
 }
 
-@ScalaJSDefined
 trait NavigationDrawerScreenOptions extends NavigationScreenOptions
 
 object NavigationDrawerScreenOptions {
@@ -138,21 +129,17 @@ object NavigationDrawerScreenOptions {
   }
 }
 
-@ScalaJSDefined
 trait GenericScreen extends ScreenClass {
   override type ParamsType = js.Object
 }
 
-//@ScalaJSDefined
+//
 //trait NavigationScreenComponent[T] extends js.Object {}
 
-@ScalaJSDefined
 trait NavigationNavigator[T] extends js.Object {}
 
-@ScalaJSDefined
 trait NavigationParams extends js.Object
 
-@ScalaJSDefined
 trait NavigationNavigateAction extends js.Object {
   var `type`: String
   var routeName: String
@@ -171,7 +158,6 @@ object NavigationNavigateAction {
             action = action).asInstanceOf[NavigationNavigateAction]
 }
 
-@ScalaJSDefined
 trait NavigationBackAction extends js.Object {
   var `type`: String
   var key: U[String] = undefined
@@ -183,7 +169,6 @@ object NavigationBackAction {
     literal(`type` = "Back", key = key).asInstanceOf[NavigationBackAction]
 }
 
-@ScalaJSDefined
 trait NavigationSetParamsAction extends js.Object {
   var `type`: String
   var key: String
@@ -196,7 +181,6 @@ object NavigationSetParamsAction {
       .asInstanceOf[NavigationSetParamsAction]
 }
 
-@ScalaJSDefined
 trait NavigationInitAction extends js.Object {
   var `type`: String
 }
@@ -205,7 +189,6 @@ object NavigationInitAction {
   def apply() = literal(`type` = "Init").asInstanceOf[NavigationInitAction]
 }
 
-@ScalaJSDefined
 trait NavigationResetAction extends js.Object {
   var `type`: String
   var index: Double
@@ -218,7 +201,6 @@ object NavigationResetAction {
       .asInstanceOf[NavigationResetAction]
 }
 
-@ScalaJSDefined
 trait NavigationContainerOptions extends js.Object {
   val URIPrefix: U[String] = undefined
 }
@@ -231,7 +213,6 @@ object NavigationContainerOptions {
   }
 }
 
-@ScalaJSDefined
 trait NavigationContainerConfig extends js.Object {
   val containerOptions: U[NavigationContainerOptions] = undefined
 }
@@ -245,7 +226,6 @@ object NavigationContainerConfig {
   }
 }
 
-@ScalaJSDefined
 trait NavigationStackViewConfigMode extends js.Object
 
 object NavigationStackViewConfigMode {
@@ -253,7 +233,6 @@ object NavigationStackViewConfigMode {
   @inline def MODAL = "modal".asInstanceOf[NavigationStackViewConfigMode]
 }
 
-@ScalaJSDefined
 trait HeaderMode extends js.Object
 
 object HeaderMode {
@@ -262,7 +241,6 @@ object HeaderMode {
   @inline def NONE = "none".asInstanceOf[HeaderMode]
 }
 
-@ScalaJSDefined
 trait NavigationStackViewConfig extends js.Object {
   val mode: U[NavigationStackViewConfigMode] = undefined
 
@@ -284,7 +262,6 @@ object NavigationStackViewConfig {
   }
 }
 
-@ScalaJSDefined
 trait NavigationStackRouterConfig extends js.Object {
   val initialRouteName: U[String] = undefined
   val initialRouteParams: U[NavigationParams] = undefined
@@ -304,20 +281,16 @@ object NavigationStackRouterConfig {
   }
 }
 
-@ScalaJSDefined
 trait NavigationScreenRouteConfig extends js.Object {
   var screen: js.Any //TODO fix this
   var path: U[String] = undefined
   val navigationOptions: NavigationScreenOptions
 }
 
-@ScalaJSDefined
 trait NavigationStackScreenRouteConfig extends NavigationScreenRouteConfig
 
-@ScalaJSDefined
 trait NavigationTabScreenRouteConfig extends NavigationScreenRouteConfig
 
-@ScalaJSDefined
 trait NavigationDrawerScreenRouteConfig extends NavigationScreenRouteConfig
 
 object NavigationScreenRouteConfig {
@@ -335,7 +308,6 @@ object NavigationScreenRouteConfig {
   }
 }
 
-@ScalaJSDefined
 trait NavigationLazyScreenRouteConfig extends js.Object {
   val getScreen: js.Function0[NavigationScreenComponent[_, _]] | NavigationNavigator[
     _]
@@ -355,7 +327,7 @@ object NavigationLazyScreenRouteConfig {
     p.asInstanceOf[NavigationLazyScreenRouteConfig]
   }
 }
-@ScalaJSDefined
+
 trait NavigationTabRouterConfig extends js.Object {
   val initialRouteName: U[String] = undefined
   val paths: U[NavigationPathsConfig] = undefined
@@ -375,7 +347,6 @@ object NavigationTabRouterConfig {
   }
 }
 
-@ScalaJSDefined
 trait NavigationProp[S] extends js.Object {
   val state: S
   val dispatch: NavigationDispatch[NavigationAction]
@@ -406,7 +377,6 @@ trait NavigationScreenProp[P <: js.Object] extends js.Object {
   def setParams(newParams: P): Boolean = js.native
 }
 
-@ScalaJSDefined
 trait NavigationNavigatorProps extends js.Object {
   val navigation: NavigationProp[NavigationState]
   val screenProps: js.Object
@@ -421,7 +391,6 @@ object NavigationNavigatorProps {
   }
 }
 
-@ScalaJSDefined
 trait NavigationLayout extends js.Object {
   val height: NavigationAnimatedValue
   val initHeight: Double
@@ -430,7 +399,6 @@ trait NavigationLayout extends js.Object {
   val width: NavigationAnimatedValue
 }
 
-@ScalaJSDefined
 trait NavigationScene extends js.Object {
   val index: Double
   val isActive: Boolean
@@ -439,7 +407,6 @@ trait NavigationScene extends js.Object {
   val route: NavigationRoute[js.Object]
 }
 
-@ScalaJSDefined
 trait NavigationTransitionProps extends js.Object {
   val layout: NavigationLayout
   val navigationState: NavigationState
@@ -451,7 +418,6 @@ trait NavigationTransitionProps extends js.Object {
   val gestureResponseDistance: U[Double] = undefined
 }
 
-@ScalaJSDefined
 trait NavigationPanHandlers extends js.Object {
   val onMoveShouldSetResponder: js.Function0[Unit]
   val onMoveShouldSetResponderCapture: js.Function0[Unit]
@@ -467,7 +433,6 @@ trait NavigationPanHandlers extends js.Object {
   val onStartShouldSetResponderCapture: js.Function0[Unit]
 }
 
-@ScalaJSDefined
 trait NavigationTransitionSpec extends js.Object {
   val duration: U[Double] = undefined
   val easing: U[js.Function0[js.Any]] = undefined
@@ -489,7 +454,6 @@ object NavigationTransitionSpec {
   }
 }
 
-@ScalaJSDefined
 trait NavigationGestureDirection extends js.Object
 
 object NavigationGestureDirection {
@@ -499,7 +463,6 @@ object NavigationGestureDirection {
 
 }
 
-@ScalaJSDefined
 trait TabBarPosition extends js.Object
 
 object TabBarPosition {
@@ -507,7 +470,6 @@ object TabBarPosition {
   @inline def BOTTOM = "bottom".asInstanceOf[TabBarPosition]
 }
 
-@ScalaJSDefined
 trait TabBarOptions extends js.Object {
   val activeTintColor: U[String] = undefined
   val showIcon: U[Boolean] = undefined
@@ -521,7 +483,7 @@ object TabBarOptions {
     p.asInstanceOf[TabBarOptions]
   }
 }
-@ScalaJSDefined
+
 trait TabViewConfig extends js.Object {
   val tabBarComponent: U[ReactClass] = undefined
   val tabBarPosition: U[TabBarPosition] = undefined
@@ -544,7 +506,6 @@ object TabViewConfig {
   }
 }
 
-@ScalaJSDefined
 trait DrawerPosition extends js.Object
 
 object DrawerPosition {
@@ -553,7 +514,6 @@ object DrawerPosition {
   @inline def RIGHT = "right".asInstanceOf[DrawerPosition]
 }
 
-@ScalaJSDefined
 trait DrawerContentOptions extends js.Object {
   val activeTintColor: U[String] = undefined
   val activeBackgroundColor: U[String] = undefined
@@ -574,7 +534,6 @@ object DrawerContentOptions {
   }
 }
 
-@ScalaJSDefined
 trait DrawerViewConfig extends js.Object {
   val drawerWidth: U[Double] = undefined
   val drawerPosition: U[DrawerPosition] = undefined
@@ -595,14 +554,12 @@ object DrawerViewConfig {
   }
 }
 
-@ScalaJSDefined
 trait NavigationScreenDetails[T <: js.Object] extends js.Object {
   val options: T
   val state: NavigationRoute[js.Object]
   val navigation: Navigation[js.Object]
 }
 
-@ScalaJSDefined
 trait HeaderProps extends NavigationTransitionProps {
   val mode: HeaderMode
   val router: NavigationRouter

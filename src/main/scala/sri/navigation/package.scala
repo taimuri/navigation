@@ -1,6 +1,6 @@
 package sri
 
-import sri.core.{ComponentConstructor, React, ReactElement}
+import sri.core.{ComponentConstructor, ReactElement}
 import sri.macros.{OptDefault, OptionalParam}
 import sri.navigation.navigators.NavigationNavigatorConstructor
 import sri.universal.PropTypes
@@ -8,7 +8,7 @@ import sri.universal.apis.AnimatedValue
 
 import scala.reflect.ClassTag
 import scala.scalajs.js
-import scala.scalajs.js.annotation.{JSImport, ScalaJSDefined}
+import scala.scalajs.js.annotation.JSImport
 import scala.scalajs.js.{ConstructorTag, |}
 
 package object navigation {
@@ -180,7 +180,6 @@ package object navigation {
   @inline def DRAWER_OPEN = "DrawerOpen"
   @inline def DRAWER_CLOSE = "DrawerClose"
 
-  @ScalaJSDefined
   sealed trait NavigationScreenComponentConstructor
       extends ComponentConstructor
 
@@ -188,6 +187,12 @@ package object navigation {
     js.constructorTag[C]
       .constructor
       .asInstanceOf[NavigationScreenComponentConstructor]
+
+  def navigationNavigatorComponentConstructor[
+      C <: NavigatorViewComponentClass: js.ConstructorTag] =
+    js.constructorTag[C]
+      .constructor
+      .asInstanceOf[NavigationNavigatorComponentConstructor]
 
   val navigationContextType =
     js.Dictionary("navigation" -> PropTypes.`object`.isRequired)

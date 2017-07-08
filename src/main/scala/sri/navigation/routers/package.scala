@@ -3,11 +3,10 @@ package sri.navigation
 import sri.macros.{FunctionObjectMacro, OptDefault, OptionalParam}
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.{JSImport, ScalaJSDefined}
+import scala.scalajs.js.annotation.JSImport
 
 package object routers {
 
-  @ScalaJSDefined
   trait StackRouterConfig extends js.Object
 
   object StackRouterConfig {
@@ -40,7 +39,6 @@ package object routers {
                   routes: (String, NavigationScreenRouteConfig)*) =
     StackRouterJS(js.Dictionary(routes: _*), stackConfig)
 
-  @ScalaJSDefined
   trait TabRouterConfig extends js.Object
 
   object TabRouterConfig {

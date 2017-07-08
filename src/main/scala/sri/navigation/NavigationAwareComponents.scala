@@ -3,40 +3,39 @@ package sri.navigation
 import sri.core.{
   =:!=,
   Component,
+  ComponentConstructor,
   ComponentJS,
   ComponentNoPS,
   ComponentP,
   ComponentS,
+  CreateElement,
+  InternalComponentP,
+  React,
   ReactClass,
-  ReactJSProps
+  ReactScalaClass
 }
 
 import scala.language.existentials
 import scala.reflect.ClassTag
 import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
-import scala.scalajs.js.annotation.ScalaJSDefined
+import scala.scalajs.js.annotation.JSExportStatic
 
-@ScalaJSDefined
 trait ScreenClass extends ReactClass {
   type ParamsType <: js.Object
 }
 
-@ScalaJSDefined
 abstract class NavigationScreenComponentP[P >: Null <: js.Object](
     implicit ev: =:!=[P, Null])
     extends NavigationScreenComponent[P, Null] {}
 
-@ScalaJSDefined
 abstract class NavigationScreenComponentNoPS
     extends NavigationScreenComponent[Null, Null]
 
-@ScalaJSDefined
 abstract class NavigationScreenComponentS[S <: AnyRef](
     implicit ev: =:!=[S, Null])
     extends NavigationScreenComponent[Null, S]
 
-@ScalaJSDefined
 abstract class NavigationScreenComponent[Params >: Nothing <: js.Object,
 S <: AnyRef](implicit ev: =:!=[Params, Nothing])
     extends ComponentJS[NavigatorScreenProps[Params], S]
@@ -85,57 +84,135 @@ object NavigationCtrl {
     navigation.navigate(DRAWER_CLOSE)
 
 }
-@ScalaJSDefined
-abstract class NavigationAwareComponent[P >: Null <: AnyRef,
-                                        S >: Null <: AnyRef](
+
+sealed trait NavigationAwareComponentClass extends ReactScalaClass {
+  override type ScalaPropsType <: AnyRef
+}
+
+abstract class NavigationAwareComponent[
+    P >: Null <: AnyRef, S >: Null <: AnyRef]
+    extends Component[P, S]
+    with NavigationAwareComponentClass {
+
+  @inline
+  implicit def navigationJS: Navigation[_] =
+    jsProps.asInstanceOf[js.Dynamic].navigation.asInstanceOf[Navigation[_]]
+
+  def navigation = NavigationCtrl
+
+}
+
+abstract class NavigationAwareComponentP[P >: Null <: AnyRef]
+    extends ComponentP[P]
+    with NavigationAwareComponentClass {
+
+  @inline
+  implicit def navigationJS: Navigation[_] =
+    jsProps.asInstanceOf[js.Dynamic].navigation.asInstanceOf[Navigation[_]]
+
+  def navigation = NavigationCtrl
+}
+
+abstract class NavigationAwareComponentS[S >: Null <: AnyRef]
+    extends ComponentS[S]
+    with NavigationAwareComponentClass {
+
+  @inline
+  def navigationJS: Navigation[_] =
+    jsProps.asInstanceOf[js.Dynamic].navigation.asInstanceOf[Navigation[_]]
+
+  def navigation = NavigationCtrl
+}
+
+abstract class NavigationAwareComponentNoPS
+    extends ComponentNoPS
+    with NavigationAwareComponentClass {
+
+  @inline
+  def navigationJS: Navigation[_] =
+    jsProps.asInstanceOf[js.Dynamic].navigation.asInstanceOf[Navigation[_]]
+
+  def navigation = NavigationCtrl
+}
+
+abstract class RouterAwareComponentJS[
+    P >: Null <: js.Object, S >: Null <: AnyRef]
+    extends ComponentJS[P, S] {
+
+  @inline
+  implicit def navigationJS: Navigation[_] =
+    props.asInstanceOf[js.Dynamic].navigation.asInstanceOf[Navigation[_]]
+  def navigation = NavigationCtrl
+}
+
+class WithNavigation extends ComponentP[WithNavigation.Props] {
+
+  def render() = {
+    React.createElement(props.ctor,
+                        js.Dynamic.literal(scalaProps =
+                                             props.cProps.asInstanceOf[js.Any],
+                                           navigation = context.navigation))
+  }
+}
+
+object WithNavigation {
+
+  @JSExportStatic
+  val contextTypes = navigationContextType
+
+  case class Props(ctor: js.Any, cProps: Any)
+
+  @inline
+  def apply[C <: NavigationAwareComponentClass {
+    type ScalaPropsType >: Null <: AnyRef
+  }: js.ConstructorTag](props: C#ScalaPropsType) = {
+    val ctor = js.constructorTag[C].constructor
+    CreateElement[WithNavigation](Props(ctor, props))
+  }
+
+  @inline
+  def apply[C <: NavigationAwareComponentClass { type ScalaPropsType = Null }: js.ConstructorTag]() = {
+    val ctor = js.constructorTag[C].constructor
+    CreateElement[WithNavigation](Props(ctor, null))
+  }
+}
+
+trait NavigatorViewComponentProps extends js.Object {
+  val router: NavigationRouter
+  val navigation: Navigation[js.Object]
+}
+
+trait NavigatorViewComponentClass extends ReactClass
+
+trait NavigationNavigatorComponentConstructor extends ComponentConstructor
+
+abstract class NavigatorViewComponent[P >: Null <: NavigatorViewComponentProps,
+                                      S >: Null <: AnyRef](
     implicit ev: =:!=[P, Null],
     ev2: =:!=[S, Null])
-    extends Component[P, S] {
+    extends ComponentJS[P, S]
+    with NavigatorViewComponentClass {
 
   @inline
-  implicit def navigationJS = context.navigation.asInstanceOf[Navigation[_]]
+  def router: NavigationRouter = props.router
 
   @inline
-  def navigation = NavigationCtrl
-}
-
-@ScalaJSDefined
-abstract class NavigationAwareComponentP[P >: Null <: AnyRef](
-    implicit ev: =:!=[P, Null])
-    extends ComponentP[P] {
-
-  @inline
-  implicit def navigationJS = context.navigation.asInstanceOf[Navigation[_]]
+  implicit def navigationJS = props.navigation.asInstanceOf[Navigation[_]]
 
   @inline
   def navigation = NavigationCtrl
 }
 
-@ScalaJSDefined
-abstract class NavigationAwareComponentS[S >: Null <: AnyRef](
-    implicit ev: =:!=[S, Null])
-    extends ComponentS[S] {
+abstract class NavigatorViewComponentP[
+    P >: Null <: NavigatorViewComponentProps](implicit ev: =:!=[P, Null])
+    extends ComponentJS[P, Null]
+    with NavigatorViewComponentClass {
+  @inline
+  def router: NavigationRouter = props.router
 
   @inline
-  implicit def navigationJS = context.navigation.asInstanceOf[Navigation[_]]
-
-  @inline
-  def navigation = NavigationCtrl
-}
-
-@ScalaJSDefined
-abstract class NavigationAwareComponentNoPS extends ComponentNoPS {
-
-  @inline
-  implicit def navigationJS = context.navigation.asInstanceOf[Navigation[_]]
+  implicit def navigationJS = props.navigation.asInstanceOf[Navigation[_]]
 
   @inline
   def navigation = NavigationCtrl
 }
-
-//object NavigationAwareComponent {
-//  @JSExportStatic
-//  val contextTypes =
-//    js.Dictionary("navigation" -> React.PropTypes.`object`.isRequired)
-//
-//}
