@@ -100,7 +100,7 @@ package object navigation {
       navigationOptions: OptionalParam[NavigationDrawerScreenOptions] =
         OptDefault,
       navigationOptionsDynamic: OptionalParam[
-        NavigationScreenConfigProps[C] => NavigationTabScreenOptions] =
+        NavigationScreenConfigProps[C] => NavigationDrawerScreenOptions] =
         OptDefault)(implicit ctag: ClassTag[C])
     : (String, NavigationDrawerScreenRouteConfig) = {
     registerRoute(ctag.runtimeClass.getName,
@@ -143,7 +143,7 @@ package object navigation {
       name: String,
       navigator: NavigationNavigatorConstructor,
       path: OptionalParam[String] = OptDefault,
-      navigationOptions: OptionalParam[NavigationDrawerScreenOptions] =
+      navigationOptions: OptionalParam[NavigationStackScreenOptions] =
         OptDefault): (String, NavigationStackScreenRouteConfig) =
     registerRoute(name,
                   comp = navigator,
