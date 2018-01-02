@@ -1,19 +1,7 @@
 package sri.navigation
 
-import sri.core.{
-  =:!=,
-  Component,
-  ComponentConstructor,
-  ComponentJS,
-  ComponentNoPS,
-  ComponentP,
-  ComponentS,
-  CreateElement,
-  InternalComponentP,
-  React,
-  ReactClass,
-  ReactScalaClass
-}
+import sri.core.{=:!=, Component, ComponentConstructor, ComponentJS, ComponentNoPS, ComponentP, ComponentS, CreateElement, InternalComponentP, React, ReactClass, ReactScalaClass}
+import sri.relay.{CreateRelayElement, RelayContainer, RelayFragmentClass}
 
 import scala.language.existentials
 import scala.reflect.ClassTag
@@ -174,6 +162,41 @@ object WithNavigation {
   def apply[C <: NavigationAwareComponentClass { type ScalaPropsType = Null }: js.ConstructorTag]() = {
     val ctor = js.constructorTag[C].constructor
     CreateElement[WithNavigation](Props(ctor, null))
+  }
+}
+
+class WithRelayNavigation extends ComponentP[WithRelayNavigation.Props] {
+
+  def render() = {
+    React.createElement(props.ctor,
+      js.Dynamic.literal(scalaProps =
+        props.cProps.asInstanceOf[js.Any],
+        navigation = context.navigation))
+  }
+}
+
+object WithRelayNavigation {
+
+
+  @JSExportStatic
+  val contextTypes = navigationContextType
+
+  case class Props(ctor: js.Any, cProps: Any)
+
+  @inline
+  def apply[C <: RelayFragmentClass {
+    type PropsType >: Null <: AnyRef
+  }: js.ConstructorTag](container: RelayContainer[C],
+                        props: C#PropsType) = {
+    val ctor = js.constructorTag[C].constructor
+    CreateRelayElement[C](container, props)
+  }
+
+  // TODO change this
+  @inline
+  def apply[C <: RelayFragmentClass { type PropsType = Null }: js.ConstructorTag]() = {
+    val ctor = js.constructorTag[C].constructor
+    CreateElement[WithRelayNavigation](Props(ctor, null))
   }
 }
 

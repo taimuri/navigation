@@ -11,6 +11,7 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "jest": "^20.0.4"
+    "jest": "^20.0.4",
+    "react-relay": "^1.0.0"
   }
 }

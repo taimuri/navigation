@@ -23,7 +23,8 @@ scalacOptions ++= Seq(
 
 libraryDependencies ++= Seq(
   "scalajs-react-interface" %%% "universal" % "2017.7.9-RC" % Provided,
-  "scalajs-react-interface" %%% "core" % "2017.7.9-RC" % Provided)
+  "scalajs-react-interface" %%% "core" % "2017.7.9-RC" % Provided,
+  "scalajs-react-interface" %%% "relay" % "2017.7.9-RC" % Provided)
 
 //bintray
 resolvers += Resolver.jcenterRepo
